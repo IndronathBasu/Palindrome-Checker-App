@@ -1,4 +1,5 @@
 import java.util.Stack;
+// This program checks if a given string is a palindrome using a stack data structure.
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
@@ -26,6 +27,7 @@ public class PalindromeCheckerApp {
             System.out.println(word + " is a Palindrome");
         } else {
             System.out.println(word + " is NOT a Palindrome");
+            // This program checks if a given string is a palindrome using a stack data structure.
         }
 
     }
