@@ -1,34 +1,100 @@
-import java.util.Stack;
-// This program checks if a given string is a palindrome using a stack data structure.
+import java.util.*;
+
+
+interface PalindromeStrategy {
+    boolean isPalindrome(String text);
+}
+
+// Stack Strategy Implementation
+class StackStrategy implements PalindromeStrategy {
+
+    public boolean isPalindrome(String text) {
+
+        Stack<Character> stack = new Stack<>();
+
+        for (char c : text.toCharArray()) {
+            stack.push(c);
+        }
+
+        for (char c : text.toCharArray()) {
+            if (c != stack.pop()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+
+// Deque Strategy Implementation
+class DequeStrategy implements PalindromeStrategy {
+
+    public boolean isPalindrome(String text) {
+
+        Deque<Character> deque = new ArrayDeque<>();
+
+        for (char c : text.toCharArray()) {
+            deque.addLast(c);
+        }
+
+        while (deque.size() > 1) {
+            if (!deque.removeFirst().equals(deque.removeLast())) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+
+// Context Class
+class PalindromeChecker {
+
+    private PalindromeStrategy strategy;
+
+    public PalindromeChecker(PalindromeStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public boolean check(String text) {
+        return strategy.isPalindrome(text);
+    }
+}
+
+// Main Application Class
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        // Original string
-        String word = "madam";
+        Scanner sc = new Scanner(System.in);
 
-        // Create stack
-        Stack<Character> stack = new Stack<>();
+        System.out.println("Enter a string:");
+        String input = sc.nextLine();
 
-        // Push characters into stack
-        for (int i = 0; i < word.length(); i++) {
-            stack.push(word.charAt(i));
-        }
+        System.out.println("Choose Strategy:");
+        System.out.println("1. Stack Strategy");
+        System.out.println("2. Deque Strategy");
 
-        // Build reversed string using pop
-        String reversed = "";
+        int choice = sc.nextInt();
 
-        while (!stack.isEmpty()) {
-            reversed = reversed + stack.pop();
-        }
+        PalindromeStrategy strategy;
 
-        // Compare original and reversed
-        if (word.equals(reversed)) {
-            System.out.println(word + " is a Palindrome");
+        if (choice == 1) {
+            strategy = new StackStrategy();
         } else {
-            System.out.println(word + " is NOT a Palindrome");
-            // This program checks if a given string is a palindrome using a stack data structure.
+            strategy = new DequeStrategy();
         }
 
+        PalindromeChecker checker = new PalindromeChecker(strategy);
+
+        boolean result = checker.check(input);
+
+        if (result) {
+            System.out.println("The given string is a Palindrome");
+        } else {
+            System.out.println("The given string is NOT a Palindrome");
+        }
+
+        sc.close();
     }
 }
