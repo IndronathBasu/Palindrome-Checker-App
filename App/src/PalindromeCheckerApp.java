@@ -5,7 +5,7 @@ import java.util.ArrayDeque;
 
 class PalindromeCheckerApp {
 
-    // String reverse method
+
     static boolean reverseCheck(String input) {
         String reversed = "";
         for (int i = input.length() - 1; i >= 0; i--) {
